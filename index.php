@@ -88,7 +88,8 @@ function sejolicense_check_form() {
 add_action('admin_notices', 'sejolicense_display_message');
 
 function sejolicense_display_message() {
-	global $sejolicense;
+
+	global $sejolicense, $pagenow;
 
 	if(false !== $sejolicense && array_key_exists('valid', $sejolicense)) :
 
@@ -100,6 +101,26 @@ function sejolicense_display_message() {
 	    </div>
 		<?php
 	endif;
+
+	if(
+		'options-general.php' === $pagenow &&
+		isset($_GET['page']) &&
+		'sejoli-license' === $_GET['page']
+	) :
+
+		?>
+		<div class="notice notice-warning">
+			<h2>PERHATIAN</h2>
+			<p>
+				<?php _e('PASTIKAN anda sudah mengubah target link di file index.php line 38 dan 39', 'sejoli'); ?>.<br />
+				define('SEJOLI_REGISTER_LICENSE_URL', 'http://localhost/sejoli/sejoli-license');<br />
+				define('SEJOLI_VALIDATE_LICENSE_URL', 'http://localhost/sejoli/sejoli-validate-license');
+			</p>
+		</div>
+		<?php
+
+	endif;
+
 }
 
 
